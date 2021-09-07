@@ -6,28 +6,46 @@ const cors = require('cors')
 const authJwt = require('./helpers/jwt')
 require('dotenv').config()
 const { readdirSync } = require('fs')
+const errorHandler = require('./helpers/error-handler')
 
 
 //app
 const app = express()
-//db
-const connection_url = process.env.ATLAS_URI;
-mongoose.connect(connection_url,{
-    useCreateIndex:true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
 
-const db = mongoose.connection;
-db.once("open",() => {
-    console.log("dbconected");
-})
+//db
+// const connection_url = process.env.ATLAS_URI;
+// mongoose.connect(connection_url,{
+//     useCreateIndex:true,
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// })
+
+// const db = mongoose.connection;
+// db.once("open",() => {
+//     console.log("dbconected");
+// })
+// Configure Mongo
+const db = "mongodb://localhost/nativemaster";
+
+// Connect to Mongo with Mongoose
+mongoose.connect(
+        db,
+        {   useCreateIndex:true,
+            useNewUrlParser: true,
+            useUnifiedTopology: true}
+    )
+    .then(() => console.log("Mongo connected"))
+    .catch(err => console.log(err));
+ 
 
 //middlewares
 app.use(morgan("dev"));
 app.use(bodyParser.json({limit: "2mb"}));
 app.use(cors())
 app.use(authJwt())
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
+app.use(errorHandler)
+
 //routes middlewares
 
 

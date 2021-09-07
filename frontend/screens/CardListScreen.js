@@ -5,7 +5,7 @@ import Card from '../components/Card';
 
 const CardListScreen = ({navigation}) => {
 
-    const renderItem = ({item}) => {
+    const renderItem = ({props}) => {
         return (
             <Card 
                 itemData={item}

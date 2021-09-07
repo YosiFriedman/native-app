@@ -25,7 +25,7 @@ import { AuthContext } from './components/context';
 import RootStackScreen from './screens/RootStackScreen';
 
 import AsyncStorage from '@react-native-community/async-storage';
-
+import Main from './Navigators/Main'
 const Drawer = createDrawerNavigator();
 
 const App = () => {
@@ -158,17 +158,7 @@ const App = () => {
     <PaperProvider theme={theme}>
     <AuthContext.Provider value={authContext}>
     <NavigationContainer theme={theme}>
-      { loginState.userToken !== null ? (
-        <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-          <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-          <Drawer.Screen name="SupportScreen" component={SupportScreen} />
-          <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-          <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />
-        </Drawer.Navigator>
-      )
-    :
-      <RootStackScreen/>
-    }
+     <Main/>
     </NavigationContainer>
     </AuthContext.Provider>
     </PaperProvider>

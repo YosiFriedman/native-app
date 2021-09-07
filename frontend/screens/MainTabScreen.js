@@ -27,7 +27,7 @@ const ExploreStack = createStackNavigator()
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = () => (
-  <Tab.Navigator initialRouteName="Home" activeColor="#fff">
+  <Tab.Navigator initialRouteName="" activeColor="#fff">
     <Tab.Screen
       name="בית"
       component={HomeStackScreen}

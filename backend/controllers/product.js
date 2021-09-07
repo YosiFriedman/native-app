@@ -1,31 +1,7 @@
 
 const Product = require('../models/product');
+const Category = require('../models/category');
 
-//create product
-exports.create = async(req, res) => {
-    const category = await Catagory.findById(req.body.category);
-    if(!category) return res.status(400).send('קטגוריה לא נכונה')
-
-    let product = new Product({
-        name:req.body.name,
-        description: req.body.description,
-        richdescription: req.body.richdescription,
-        image: req.body.image,
-        brand: req.body.brand,
-        price: req.body.price,
-        category: req.body.category,
-        countInStock: req.body.countInStock,
-        rating: req.body.rating,
-        numReviews: req.body.numReviews,
-        isFeatured: req.body.isFeatured,
-    })
-    product = await Product.save();
-
-    if(!product) {
-        res.status(404).send({message:'הקטגוריה לא יכולה להיווצר'})
-    } 
-    res.status(200).send(product)
-}
 
 // read a product
 exports.read = async(req, res) => {
@@ -42,7 +18,7 @@ if(req.query.categories)
 {
     filter = {category: req.query.categories.split(',')}
 }
-    const productList = await Product.find({category: filter}).populate('category')
+    const productList = await Product.find(filter).populate('category')
 
     if(!productList) {
         res.status(500).json({success:false})
@@ -61,7 +37,7 @@ if(req.query.categories)
         description: req.body.description,
         richdescription: req.body.richdescription,
         image: req.body.image,
-        brand: req.body.brand,
+     
         price: req.body.price,
         category: req.body.category,
         countInStock: req.body.countInStock,

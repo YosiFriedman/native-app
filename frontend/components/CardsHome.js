@@ -10,8 +10,8 @@ import {
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 import { Container, Content, Icon, Thumbnail } from "native-base";
 
-const CardsHome = ({ navigation }) => {
-  
+const CardsHome = (props) => {
+  const {item} = props
 
  
     return (
@@ -49,89 +49,14 @@ const CardsHome = ({ navigation }) => {
               </Card.Content>
               <Card.Cover source={require("../assets/bg1.jpg")} />
               <Card.Actions>
-                <Button onPress={()=> navigation.navigate('CardItemDetails', {itemData: item})}>ראה עוד</Button>
+                <Button onPress={()=> props.navigation.navigate('CardItemDetails', {item: item})}>ראה עוד</Button>
                 <Button>הוסף לעגלה</Button>
               </Card.Actions>
             </Card>
 
-            <Card
-              style={{
-                width: 300,
-                margin: 10,
-                direction: "rtl",
-                borderRadius: 10,
-              }}
-            >
-              <Card.Content>
-                <Card.Title
-                  title="שם הטבה"
-                  subtitle="פירוט הטבה"
-                  right={(props) => (
-                    <Thumbnail
-                      source={require("../assets/logos/logo2.jpg")}
-                      style={{ width: 70 }}
-                    />
-                  )}
-                />
-              </Card.Content>
-              <Card.Cover source={require("../assets/bg3.jpg")} />
-              <Card.Actions>
-                <Button>ראה עוד</Button>
-                <Button>הוסף לעגלה</Button>
-              </Card.Actions>
-            </Card>
-            <Card
-              style={{
-                width: 300,
-                margin: 10,
-                direction: "rtl",
-                borderRadius: 10,
-              }}
-            >
-              <Card.Content>
-                <Card.Title
-                  title="שם הטבה"
-                  subtitle="פירוט הטבה"
-                  right={(props) => (
-                    <Thumbnail
-                      source={require("../assets/logos/logo5.png")}
-                      style={{ width: 70 }}
-                    />
-                  )}
-                />
-              </Card.Content>
-              <Card.Cover source={require("../assets/bg.jpg")} />
-              <Card.Actions>
-                <Button>ראה עוד</Button>
-                <Button>הוסף לעגלה</Button>
-              </Card.Actions>
-            </Card>
-            <Card
-              style={{
-                width: 300,
-                margin: 10,
-                direction: "rtl",
-                borderRadius: 10,
-              }}
-            >
-              <Card.Content>
-                <Card.Title
-                  title="שם הטבה"
-                  subtitle="פירוט הטבה"
-                  right={(props) => (
-                    <Thumbnail
-                      source={require("../assets/logos/logo4.jpg")}
-                      style={{ width: 70 }}
-                    />
-                  )}
-                />
-              </Card.Content>
-              <Card.Cover source={require("../assets/bg3.jpg")} />
-              <Card.Actions>
-                <Button>ראה עוד</Button>
-                <Button>הוסף לעגלה</Button>
-              </Card.Actions>
-            </Card>
+           
+            
+           
           </ScrollView>
         </View>
       </View>

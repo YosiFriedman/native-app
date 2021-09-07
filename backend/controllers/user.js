@@ -11,7 +11,8 @@ exports.signin = async(req, res) => {
    if(user && bcrypt.compareSync(req.body.password, user.passwordHash)){
        const token = jwt.sign(
            {
-               userId: user.id
+               userId: user.id,
+               isAdmin: user.isAdmin
            },
            secret,
            {expiresIn: '1d'}
@@ -42,3 +43,8 @@ exports.list = async(req, res) => {
    }
    res.send(userList)
    }
+   exports.count = async(req, res) => {
+    const userCount =  await User.countDocuments((count) => count)
+    
+    res.send({userCount})
+     }

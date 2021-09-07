@@ -21,8 +21,10 @@ exports.read = async(req, res) => {
     const category = await Category.findById(req.params.id);
     if(!category) {
         res.status(500).json({message:'הקטגוריה לא נמצאה'})
-    } 
-    res.status(200).send(category)
+    } else{
+        res.status(200).send(category)
+    }
+    
 }
 // read products
 exports.list = (req, res) => {

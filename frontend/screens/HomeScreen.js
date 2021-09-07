@@ -21,7 +21,7 @@ import StarRating from "../components/StarRating";
 import Stories from "../components/Stories";
 import Categories from "../components/Categories";
 import CardsHome from "../components/CardsHome";
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = (props) => {
   const [category, setCategory] = useState("");
   const theme = useTheme();
   //     axios.get('http://localhost:8000/api/categories')
@@ -35,64 +35,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <>
-      <View style={{ height: 85 }}>
-        <View style={{ flex: 3 }}>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              alignItems: "center",
-              paddingStart: 30,
-              paddingEnd: 30,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("CardListScreen", { title: "Restaurant" })
-              }
-            >
-              <View style={styles.categoryIcon}>
-                <Thumbnail
-                  square={true}
-                  style={styles.thumstyle}
-                  source={require("../assets/icons/wineandglass.png")}
-                />
-              </View>
-              <Text style={styles.categoryBtnTxt}>מסעדת שף</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              <View style={styles.categoryIcon}>
-                <Thumbnail
-                  square={true}
-                  style={styles.thumstyle}
-                  source={require("../assets/icons/hamburger.png")}
-                />
-              </View>
-              <Text style={styles.categoryBtnTxt}>מסעדות</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              <View style={styles.categoryIcon}>
-                <Thumbnail
-                  square={true}
-                  style={styles.thumstyle}
-                  source={require("../assets/icons/pancake.png")}
-                />
-              </View>
-              <Text style={styles.categoryBtnTxt}>דיינרים</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              <View style={styles.categoryIcon}>
-                <Thumbnail
-                  square={true}
-                  style={styles.thumstyle}
-                  source={require("../assets/icons/fastfood.png")}
-                />
-              </View>
-              <Text style={styles.categoryBtnTxt}>פאסטפוד</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
-      </View>
+      
       <ScrollView style={styles.container}>
         <StatusBar barStyle={theme.dark ? "light-content" : "dark-content"} />
         <View style={styles.sliderContainer}>
@@ -141,7 +84,8 @@ const HomeScreen = ({ navigation }) => {
              מסעדת שף
           </Text>
 
-          <CardsHome />
+          <CardsHome  
+          navigation={props.navigation}/>
         </View>
         <View style={styles.cardsWrapper}>
           <Text

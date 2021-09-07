@@ -21,8 +21,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 55;
 const MAX_HEIGHT = 350;
 
-const CardItemDetails = ({ route }) => {
-  const itemData = route.params.itemData;
+const CardItemDetails = ( props ) => {
+  const itemData = props.route.params.item;
   const navTitleView = useRef(null);
 
   return (
@@ -34,7 +34,7 @@ const CardItemDetails = ({ route }) => {
         maxOverlayOpacity={0.6}
         minOverlayOpacity={0.3}
         renderHeader={() => (
-          <Image source={itemData.image} style={styles.image} />
+          <Image source={require("../assets/logos/logo1.jpg")} style={styles.image} />
         )}
         renderForeground={() => (
           <View style={styles.titleContainer}>

@@ -9,7 +9,7 @@ const productSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    richDescription:{
+    richdescription:{
         type:String,
         default: ''
     },
@@ -27,10 +27,10 @@ const productSchema = mongoose.Schema({
     },
     category: {
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Catgory',
+        ref:'Category',
         required: true
     },
-    countInStock: {
+    countinstock: {
         type: Number,
         required:true,
         min: 0,
@@ -43,6 +43,10 @@ const productSchema = mongoose.Schema({
     numReviews:{
         type:Boolean,
         default: false,
+    },
+    isFeatured:{
+        type:Boolean,
+        default: false
     },
     dateCreated:{
         type:Date,
