@@ -27,7 +27,7 @@ if(req.query.categories)
    }
 
    exports.update = async(req, res) => {
-    const category = await Catagory.findById(req.body.category);
+    const category = await Category.findById(req.body.category);
     if(!category) return res.status(400).send('קטגוריה לא נכונה')
 
     const product = await Product.findByIdAndUpdate(

@@ -1,23 +1,29 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import ExploreScreen from '../screens/ExploreScreen'
+import Cart from "../screens/Cart/Cart";
 
-const Stack =createStackNavigator();
+import CheckoutNavigator from "./CheckoutNavigator";
 
-function MyStack(){
-    return(
-        <Stack.Navigator>
-            <Stack.Screen
-            name="עגלת קניות"
-            component={ExploreScreen}
-            options={{headerShown: true,title: 'FoodFinder',}}
-            
-            />
-        </Stack.Navigator>
-    )
+const Stack = createStackNavigator();
+
+function MyStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={{ headerShown: true, title: "FoodFinder" }}
+      />
+      <Stack.Screen
+        name="Checkout"
+        component={CheckoutNavigator}
+        options={{ headerShown: true, title: "Checkout" }}
+      />
+    </Stack.Navigator>
+  );
 }
 
-export default function CartNavigator(){
-    return <MyStack/>
+export default function CartNavigator() {
+  return <MyStack />;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState }  from "react";
 import {
   View,
   Text,
@@ -22,7 +22,7 @@ import Stories from "../components/Stories";
 import Categories from "../components/Categories";
 import CardsHome from "../components/CardsHome";
 const HomeScreen = (props) => {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState([]);
   const theme = useTheme();
   //     axios.get('http://localhost:8000/api/categories')
   //   .then(response => {
@@ -32,6 +32,16 @@ const HomeScreen = (props) => {
   //     console.log(error);
   //   })
   // console.log(category)
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/categories`)
+  .then((res) => {
+    
+    setCategory(res.data)
+  }).catch((err) => {
+    console.log(err)
+  })
+  console.log(category)
+  }, [])
 
   return (
     <>
@@ -72,60 +82,26 @@ const HomeScreen = (props) => {
         {/* <View><Text>{JSON.stringify(category)}</Text></View> */}
         <Stories />
 
+       
+        
+        {category.map((item, i) => {
+      return (
         <View style={styles.cardsWrapper}>
-          <Text
-            style={{
-              alignSelf: "center",
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-            }}
-          >
-             מסעדת שף
-          </Text>
-
-          <CardsHome  
-          navigation={props.navigation}/>
-        </View>
-        <View style={styles.cardsWrapper}>
-          <Text
-            style={{
-              alignSelf: "center",
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-            }}
-          >
-             מסעדות
-          </Text>
-          <CardsHome />
-        </View>
-        <View style={styles.cardsWrapper}>
-          <Text
-            style={{
-              alignSelf: "center",
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-            }}
-          >
-            דיינרים 
-          </Text>
-          <CardsHome />
-        </View>
-        <View style={styles.cardsWrapper}>
-          <Text
-            style={{
-              alignSelf: "center",
-              fontSize: 18,
-              fontWeight: "bold",
-              color: "#333",
-            }}
-          >
-             פאסטפוד
-          </Text>
-          <CardsHome />
-        </View>
+        <Text
+          style={{
+            alignSelf: "center",
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "#333",
+          }}
+        >
+           {item.name}
+        </Text>
+        <CardsHome navigation={props.navigation} categoryid = {item._id}/>
+      </View>
+      );
+    })}
+       
       </ScrollView>
     </>
   );

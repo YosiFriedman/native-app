@@ -52,8 +52,14 @@ app.use(errorHandler)
 // app.use('/api',authRoutes)
 // app.use('/api',categoryRoutes)
 readdirSync("./routes").map((r) => app.use("/api",require("./routes/" + r)));
-//listen
-const port = process.env.PORT || 8000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
-});
+//listen dev
+// const port = process.env.PORT || 8000;
+// app.listen(port, () => {
+//     console.log(`Server is running on port ${port}`)
+// });
+
+// production
+let server = app.listen(process.env.PORT || 8000, function(){
+    let port = server.address().port;
+    console.log("Express is working on port " + port)
+})

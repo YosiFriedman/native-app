@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
-import {data} from '../model/data';
+
 import Card from '../components/Card';
 
-const CardListScreen = ({navigation}) => {
+const data = require('../assets/data/products.json');
 
+const CardListScreen = ({navigation}) => {
+const [products, setProducts] = useState([])
+
+useEffect(() => {
+  setProducts(data);
+  return () => {
+    setProducts([])
+  }
+}, [])
     const renderItem = ({props}) => {
         return (
             <Card 
@@ -17,9 +26,9 @@ const CardListScreen = ({navigation}) => {
     return (
       <View style={styles.container}>
         <FlatList 
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
+            data={products}
+            renderItem={({item}) => <Text>{item.brand}</Text>}
+            keyExtractor={item => item.name}
         />
       </View>
     );

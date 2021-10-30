@@ -9,57 +9,19 @@ import {
 } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 import { Container, Content, Icon, Thumbnail } from "native-base";
+import CardListScreen from "../screens/CardListScreen";
+import ProductContainer from "../screens/Products/ProductContainer";
 
 const CardsHome = (props) => {
   const {item} = props
-
+console.log('item props', props.categoryid)
  
     return (
+      <>
       <View style={{ height: 350 }}>
-        <View style={{ flex: 1 }}>
-          <ScrollView
-            style={{ direction: "rtl" }}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              alignItems: "center",
-              paddingStart: 30,
-              paddingEnd: 30,
-            }}
-          >
-            <Card
-              style={{
-                width: 300,
-                margin: 10,
-                direction: "rtl",
-                borderRadius: 10,
-              }}
-            >
-              <Card.Content>
-                <Card.Title
-                  title="שם הטבה"
-                  subtitle="פירוט הטבה"
-                  right={(props) => (
-                    <Thumbnail
-                      source={require("../assets/logos/logo1.jpg")}
-                      style={{ width: 70 }}
-                    />
-                  )}
-                />
-              </Card.Content>
-              <Card.Cover source={require("../assets/bg1.jpg")} />
-              <Card.Actions>
-                <Button onPress={()=> props.navigation.navigate('CardItemDetails', {item: item})}>ראה עוד</Button>
-                <Button>הוסף לעגלה</Button>
-              </Card.Actions>
-            </Card>
-
-           
-            
-           
-          </ScrollView>
-        </View>
+      <ProductContainer navigation={props.navigation} categoryid={props.categoryid}/>
       </View>
+      </>
     );
  
 }

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef,useState } from "react";
 import {
   View,
   Image,
@@ -21,8 +21,10 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 55;
 const MAX_HEIGHT = 350;
 
-const CardItemDetails = ( props ) => {
-  const item = useState(props.route.params.item);
+const SingleProduct = ( props ) => {
+  const [item, setItem] = useState(props.route.params.item);
+ 
+  const [availability, setAvailability] = useState('');
   const navTitleView = useRef(null);
 
   return (
@@ -34,16 +36,16 @@ const CardItemDetails = ( props ) => {
         maxOverlayOpacity={0.6}
         minOverlayOpacity={0.3}
         renderHeader={() => (
-          <Image source={require("../assets/logos/logo1.jpg")} style={styles.image} />
+          <Image source={{uri : item.image  ? item.image : 'https://picsum.photos/700'}} style={styles.image} />
         )}
         renderForeground={() => (
           <View style={styles.titleContainer}>
-            <Text style={styles.imageTitle}>name</Text>
+            <Text style={styles.imageTitle}>{item.name}</Text>
           </View>
         )}
         renderFixedForeground={() => (
           <Animatable.View style={styles.navTitleView} ref={navTitleView}>
-            <Text style={styles.navTitle}>name</Text>
+            <Text style={styles.navTitle}>{item.name}</Text>
           </Animatable.View>
         )}
       >
@@ -64,7 +66,7 @@ const CardItemDetails = ( props ) => {
           </View>
         </TriggeringView>
         <View style={[styles.section, styles.sectionLarge]}>
-          <Text style={styles.sectionContent}>description</Text>
+          <Text style={styles.sectionContent}>{item.description}</Text>
         </View>
        
         <View style={{ marginHorizontal: 30 }}>
@@ -95,7 +97,7 @@ const CardItemDetails = ( props ) => {
   );
 };
 
-export default CardItemDetails;
+export default SingleProduct;
 
 const styles = StyleSheet.create({
   container: {
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   section: {
-    padding: 20,
+    padding:10,
     borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
     backgroundColor: "white",
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   sectionLarge: {
-    minHeight: 300,
+    minHeight: 250,
   },
   btnContainer: {
     backgroundColor: "#de4f35",
