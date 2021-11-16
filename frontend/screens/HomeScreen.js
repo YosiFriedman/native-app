@@ -21,6 +21,7 @@ import StarRating from "../components/StarRating";
 import Stories from "../components/Stories";
 import Categories from "../components/Categories";
 import CardsHome from "../components/CardsHome";
+import baseURL from "../assets/common/baseUrl";
 const HomeScreen = (props) => {
   const [category, setCategory] = useState([]);
   const theme = useTheme();
@@ -33,7 +34,8 @@ const HomeScreen = (props) => {
   //   })
   // console.log(category)
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/categories`)
+    console.log('cardshomeprops',baseURL)
+    axios.get(`${baseURL}categories`)
   .then((res) => {
     
     setCategory(res.data)

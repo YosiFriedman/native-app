@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomeScreen from './HomeScreen';
 import NotificationScreen from './NotificationScreen';
 import ExploreScreen from './ExploreScreen';
-import ProfileScreen from './ProfileScreen';
+import ProfileScreen from './User/ProfileScreen';
 import MapTestScreen from './MapTestScreen';
 import EditProfileScreen from './EditProfileScreen';
 

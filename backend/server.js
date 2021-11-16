@@ -27,9 +27,10 @@ const app = express()
 // Configure Mongo
 const db = "mongodb://localhost/nativemaster";
 
+// const uri= process.env.ATLAS_URI
 // Connect to Mongo with Mongoose
 mongoose.connect(
-        db,
+    db,
         {   useCreateIndex:true,
             useNewUrlParser: true,
             useUnifiedTopology: true}
@@ -59,7 +60,7 @@ readdirSync("./routes").map((r) => app.use("/api",require("./routes/" + r)));
 // });
 
 // production
-let server = app.listen(process.env.PORT || 8000, function(){
+let server = app.listen( 8000, function(){
     let port = server.address().port;
     console.log("Express is working on port " + port)
 })

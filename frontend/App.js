@@ -20,9 +20,10 @@ import SupportScreen from "./screens/SupportScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import BookmarkScreen from "./screens/BookmarkScreen";
 
-import { AuthContext } from "./components/context";
+//contextapi
+import Auth from './Context/store/Auth';
 
-import RootStackScreen from "./screens/RootStackScreen";
+
 
 import AsyncStorage from "@react-native-community/async-storage";
 import Main from "./Navigators/Main";
@@ -62,15 +63,17 @@ const App = () => {
   const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
 
   return (
+    <Auth>
+
+   
     <Provider store={store}>
     <PaperProvider theme={theme}>
-      <AuthContext.Provider>
         <NavigationContainer theme={theme}>
           <Main />
         </NavigationContainer>
-      </AuthContext.Provider>
     </PaperProvider>
     </Provider>
+    </Auth>
   );
 };
 

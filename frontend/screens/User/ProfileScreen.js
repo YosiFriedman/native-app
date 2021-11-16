@@ -1,26 +1,56 @@
-import React from 'react';
-import {View, SafeAreaView, StyleSheet} from 'react-native';
+import React, {useContext, useState, useCallback, useEffect} from 'react';
+import {View, SafeAreaView, StyleSheet,Button} from 'react-native';
 import {
   Avatar,
   Title,
   Caption,
   Text,
   TouchableRipple,
+
 } from 'react-native-paper';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
+import AuthGlobal from '../../Context/store/AuthGlobal';
+import { logoutUser } from '../../Context/actions/Auth.Actions';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import baseURL from '../../assets/common/baseUrl';
 
 
+const ProfileScreen = (props) => {
+const context = useContext(AuthGlobal)
+const [userProfile, setUserProfile] = useState()
 
-import files from '../assets/filesBase64';
+useEffect(() => {
+  console.log('user',context.stateUser.user)
+ 
+  if(
+    context.stateUser.isAuthenticated === false ||
+    context.stateUser.isAuthenticated === null
+  ) {
+    props.navigation.navigate("Signin")
+   
+  }
+  AsyncStorage.getItem("jwt")
+  .then((res)=>{
+    console.log('res', res)
+    axios.get(`${baseURL}user/${context.stateUser.user.userId}`,{
+      headers: {Authorization: `Bearer ${res}`},
+    })
+    .then((user) => setUserProfile(user.data))
+  })
+  .catch((error) => console.log(error))
 
-const ProfileScreen = () => {
-
+  return () => {
+    setUserProfile();
+  }
+}, [context.stateUser.isAuthenticated])
   
 
   return (
     <SafeAreaView style={styles.container}>
-
+{console.log('userprofile',userProfile)}
       <View style={styles.userInfoSection}>
         <View style={{flexDirection: 'row', marginTop: 15}}>
           <Avatar.Image 
@@ -33,7 +63,7 @@ const ProfileScreen = () => {
             <Title style={[styles.title, {
               marginTop:15,
               marginBottom: 5,
-            }]}>John Doe</Title>
+            }]}>{userProfile ? userProfile.name : ""}</Title>
             
           </View>
         </View>
@@ -81,6 +111,13 @@ const ProfileScreen = () => {
             <Text style={styles.menuItemText}>אודותינו</Text>
           </View>
         </TouchableRipple>
+        <Button
+                title="עבור לתשלום"
+                onPress={() => [
+                  AsyncStorage.removeItem("jwt"),
+                  logoutUser(context.dispatch)
+                ]}
+              />
       </View>
     </SafeAreaView>
   );

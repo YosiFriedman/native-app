@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
-    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-navigation/bottom-tabs": "^5.0.6",
@@ -21,6 +21,7 @@
     "axios": "^0.21.4",
     "expo": "^40.0.1",
     "expo-status-bar": "~1.0.3",
+    "jwt-decode": "^3.1.2",
     "native-base": "^2.15.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",

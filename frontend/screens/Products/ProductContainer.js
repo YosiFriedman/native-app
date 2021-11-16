@@ -12,8 +12,8 @@ const ProductContainer = (props) => {
 const [products, setProducts] = useState([])
 
 useEffect(() => {
-  console.log('cardshomeprops',props)
-  axios.get(`http://localhost:8000/api/products?categories=${props.categoryid}`)
+  console.log('cardshomeprops',baseURL)
+  axios.get(`${baseURL}products?categories=${props.categoryid}`)
 .then((res) => {
   
   setProducts(res.data)
