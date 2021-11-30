@@ -1,7 +1,7 @@
 import jwt_decode from 'jwt-decode';
 import AsyncStorage from '@react-native-community/async-storage';
 import baseURL from '../../assets/common/baseUrl';
-
+import Toast from 'react-native-toast-message';
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 
@@ -17,6 +17,7 @@ export const loginUser = (user, dispatch) => {
         },
     })
     .then((res) => res.json())
+ 
     .then((data)=> {
         if(data) { 
             const token = data.token;
@@ -27,9 +28,15 @@ export const loginUser = (user, dispatch) => {
             logoutUser(dispatch)
         }
     })
-    .catch((err) => {
-        console.log(err)
-        logoutUser(dispatch)
+    .catch((error) => {
+       
+       Toast.show({
+           topOffset:60,
+           type:"error",
+           text1:"שם משתמש או הסיסמא אינם נכונים"
+           
+       })
+       logoutUser(dispatch)
     })
 }
 
@@ -50,7 +57,7 @@ export const getUserProfile = (id) => {
 }
 
 export const logoutUser = (dispatch) => {
-    AsyncStorage.removeItem("jwt")
+    AsyncStorage.removeItem("jwt");
     dispatch(setCurrentUser({}))
 }
 

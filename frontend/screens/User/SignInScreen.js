@@ -95,6 +95,8 @@ useEffect(()=>{
 
   const SignIn = () => {
    loginUser(userDetails, context.dispatch)
+   console.log('userprofile',userDetails)
+   console.log('context',context.dispatch)
   };
   return (
     <View style={styles.container}>
@@ -215,7 +217,7 @@ useEffect(()=>{
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("SignUpScreen")}
+            onPress={() => props.navigation.navigate("Signup")}
             style={[
               styles.signIn,
               {

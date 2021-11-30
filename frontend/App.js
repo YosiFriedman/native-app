@@ -6,7 +6,7 @@ import {
   DarkTheme as NavigationDarkTheme,
 } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-
+import Toast from 'react-native-toast-message';
 import {
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
@@ -70,6 +70,7 @@ const App = () => {
     <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
           <Main />
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </NavigationContainer>
     </PaperProvider>
     </Provider>

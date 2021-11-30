@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import {
   View,
@@ -11,6 +11,8 @@ import CartNavigator from "./CartNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import UserNavigator from "./UserNavigator";
 import CartIcon from '../components/CartIcon';
+import AdminNavigator from "./AdminNavigator";
+import AuthGlobal from '../Context/store/AuthGlobal';
 const icon = require("../assets/icons/fastfood.png");
 const Tab = createMaterialBottomTabNavigator();
 const COLORS = {
@@ -32,6 +34,8 @@ const COLORS = {
 
 
 const Main = () => {
+  const context = useContext(AuthGlobal)
+  console.log(context.stateUser.user.isAdmin)
   return (
     <Tab.Navigator
     initialRouteName="Home"
@@ -68,15 +72,18 @@ const Main = () => {
         ),
       }}
     />
-    <Tab.Screen
+    {context.stateUser.user.isAdmin === "true" ? (
+      <Tab.Screen
       name="Admin"
-      component={CartNavigator}
+      component={AdminNavigator}
       options={{
         tabBarIcon: ({ color }) => (
           <Icon name="cog" color={color} size={30} />
         ),
       }}
     />
+    ): null}
+    
    
       <Tab.Screen
       name="User"

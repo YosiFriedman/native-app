@@ -23,7 +23,7 @@ const context = useContext(AuthGlobal)
 const [userProfile, setUserProfile] = useState()
 
 useEffect(() => {
-  console.log('user',context.stateUser.user)
+  console.log('user',context.stateUser.isAuthenticated)
  
   if(
     context.stateUser.isAuthenticated === false ||
@@ -112,10 +112,11 @@ useEffect(() => {
           </View>
         </TouchableRipple>
         <Button
-                title="עבור לתשלום"
+                title={"התנתק"}
                 onPress={() => [
                   AsyncStorage.removeItem("jwt"),
-                  logoutUser(context.dispatch)
+                  logoutUser(context.dispatch),
+                console.log('after press',  context.stateUser.isAuthenticated )
                 ]}
               />
       </View>
