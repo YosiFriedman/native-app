@@ -1,7 +1,7 @@
 
 const Product = require('../models/product');
 const Category = require('../models/category');
-
+const Business = require('../models/business');
 
 // read a product
 exports.read = async(req, res) => {
@@ -18,7 +18,7 @@ if(req.query.categories)
 {
     filter = {category: req.query.categories.split(',')}
 }
-    const productList = await Product.find(filter).populate('category')
+    const productList = await Product.find(filter).populate('category').populate('business')
 
     if(!productList) {
         res.status(500).json({success:false})
@@ -26,34 +26,38 @@ if(req.query.categories)
     res.send(productList)
    }
 
-   exports.update = async(req, res) => {
-    const category = await Category.findById(req.body.category);
-    if(!category) return res.status(400).send('קטגוריה לא נכונה')
+//    exports.update = async(req, res) => {
+//     console.log(req.body)
+//     const category = await Category.findById(req.body.category);
+//     if(!category) return res.status(400).send('קטגוריה לא נכונה')
 
-    const product = await Product.findByIdAndUpdate(
-        req.params.id,
-        {
-        name:req.body.name,
-        description: req.body.description,
-        richdescription: req.body.richdescription,
-        image: req.body.image,
-     
-        price: req.body.price,
-        category: req.body.category,
-        countInStock: req.body.countInStock,
-        rating: req.body.rating,
-        numReviews: req.body.numReviews,
-        isFeatured: req.body.isFeatured,
-        },
-        {new: true}
-        )
-        if(!product) {
-            res.status(404).send({message:'הקטגוריה לא יכולה להתעדכן'})
-        } 
-        res.status(200).send(product)
+//     const business = await Business.findById(req.body.business);
+//     if(!business) return res.status(400).send('עסק לא נכונה')
+
+//     const product = await Product.findByIdAndUpdate(
+//         req.params.id,
+//         {
+//         name:req.body.name,
+//         description: req.body.description,
+//         richdescription: req.body.richdescription,
+//         image: req.body.image,
+//         price: req.body.price,
+//         category: req.body.category,
+//         countinstock: req.body.countinstock,
+//         rating: req.body.rating,
+//         numReviews: req.body.numReviews,
+//         isFeatured: req.body.isFeatured,
+//         business: req.body.business
+//         },
+//         {new: true}
+//         )
+//         if(!product) {
+//             res.status(404).send({message:'הקטגוריה לא יכולה להתעדכן'})
+//         } 
+//         res.status(200).send(product)
     
 
-}
+// }
 
 //delete product
 exports.remove = (req, res) => {

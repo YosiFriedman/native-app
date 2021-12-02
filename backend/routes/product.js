@@ -2,13 +2,14 @@ const express = require('express')
 const router = express.Router()
 const Product = require('../models/product');
 const Category = require('../models/category');
+const Business = require('../models/business');
 const mongoose = require('mongoose')
 const { read,update,remove,list,count, featured }  = require("../controllers/product");
 
 
 
 const multer = require('multer');
-const { Mongoose } = require('mongoose');
+
 
 const FILE_TYPE_MAP = {
     'image/png': 'png',
@@ -37,6 +38,7 @@ const storage = multer.diskStorage({
   var uploadOptions = multer({ storage: storage })
 
 router.post('/product',uploadOptions.single('image'), async(req, res) => {
+    console.log(req.body)
     const category = await Category.findById(req.body.category);
     if(!category) return res.status(400).send('קטגוריה לא נכונה')
 
@@ -56,6 +58,7 @@ router.post('/product',uploadOptions.single('image'), async(req, res) => {
         rating: req.body.rating,
         numReviews: req.body.numReviews,
         isFeatured: req.body.isFeatured,
+        business: req.body.business
     })
     product = await product.save();
 
@@ -65,11 +68,50 @@ router.post('/product',uploadOptions.single('image'), async(req, res) => {
     res.send(product)
 })
 
+router.put('/product/:id',uploadOptions.single('image'), async(req, res) => {
+    console.log(req.body)
+    const category = await Category.findById(req.body.category);
+    if(!category) return res.status(400).send('קטגוריה לא נכונה')
+
+    const business = await Business.findById(req.body.business);
+    if(!business) return res.status(400).send('עסק לא נכונה')
+
+    const file = req.file;
+    if(!file) return res.status(400).send('אין תמונה')
+    const fileName = req.file.filename
+    const basePath =`${req.protocol}://${req.get('host')}/public/uploads/`
+
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+        name:req.body.name,
+        description: req.body.description,
+        richdescription: req.body.richdescription,
+        image: `${basePath}${fileName}`,
+        price: req.body.price,
+        category: req.body.category,
+        countinstock: req.body.countinstock,
+        rating: req.body.rating,
+        numReviews: req.body.numReviews,
+        isFeatured: req.body.isFeatured,
+        business: req.body.business
+        },
+        {new: true}
+        )
+        if(!product) {
+            res.status(404).send({message:'הקטגוריה לא יכולה להתעדכן'})
+        } 
+        res.status(200).send(product)
+    
+
+}
+)
+
 router.get('/product/:id',read);
 router.get('/products',list);
 router.get('/products/count',count);
 router.get('/products/featured/:count',featured);
-router.put('/product/:id', update)
+// router.put('/product/:id', update)
 
 router.put('/gallery-images/:id',
 uploadOptions.array('images', 10),

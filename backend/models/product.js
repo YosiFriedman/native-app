@@ -5,6 +5,11 @@ const productSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    business: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Business',
+        required: true
+    },
     description:{
         type:String,
         required:true
@@ -41,8 +46,8 @@ const productSchema = mongoose.Schema({
         default:0
     },
     numReviews:{
-        type:Boolean,
-        default: false,
+        type:Number,
+        default: 0,
     },
     isFeatured:{
         type:Boolean,
