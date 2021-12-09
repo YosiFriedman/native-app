@@ -12,7 +12,7 @@ exports.signin = async (req, res) => {
     const token = jwt.sign(
       {
         userId: user.id,
-        isAdmin: user.isAdmin,
+        role: user.role,
       },
       secret,
       { expiresIn: "1d" }
@@ -27,7 +27,8 @@ exports.signup = async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     passwordHash: bcrypt.hashSync(req.body.password, 10),
-    isAdmin: req.body.isAdmin,
+    role: req.body.role,
+    business : req.body.business
   }).save();
   if (!user) {
     res.status(404).send({ message: "הקטגוריה לא יכולה להיווצר" });

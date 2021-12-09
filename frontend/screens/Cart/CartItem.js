@@ -5,7 +5,9 @@ import { Text, Left, Right, ListItem, Thumbnail, Body } from "native-base";
 const CartItem = (props) => {
   const data = props.item;
   const [quantity, setQuantity] = useState(props.item.quantity);
-// console.log('carddataid',data.product._id)
+  const [business, setBusiness] = useState(props.item.item.product.business._id);
+  console.log('business',props.item)
+  console.log('carddataid',props.item.item.product.business._id)
   return (
     <ListItem style={styles.listItem} key={Math.random()} avatar>
       <Left>

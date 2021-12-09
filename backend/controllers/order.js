@@ -58,6 +58,7 @@ exports.list = async(req, res) => {
     res.send(order)
     
    }
+
  
 
 exports.remove = (req, res) => {
@@ -79,7 +80,12 @@ exports.update = async(req, res) => {
     const order = await Order.findByIdAndUpdate(
         req.params.id,
         {
-            status:req.body.status
+            status:req.body.status,
+            orderItems:req.body.orderItems,
+            dateOrder:req.body.dateOrder,
+            id: req.body.id,
+            totalPrice:req.body.totalPrice,
+            user:req.body.user
         },
         {new: true}
     )

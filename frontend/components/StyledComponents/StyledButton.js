@@ -36,7 +36,7 @@ ${(props)=>
 ${(props)=>
     props.small && 
     css`
-    width: 30px;
+    width: 70px;
     `
 
 }
@@ -50,7 +50,7 @@ ${(props)=>
 }
 
 ${(props)=>
-    props.small && 
+    props.large && 
     css`
     width: 135px
     `

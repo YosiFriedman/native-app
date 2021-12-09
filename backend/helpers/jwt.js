@@ -12,6 +12,8 @@ function authJwt(){
             {url: /\/api\/products(.*)/, methods: ['GET','OPTIONS']},
             {url: /\/api\/categories(.*)/, methods: ['GET','OPTIONS']},
             {url: /\/api\/businesslist(.*)/, methods: ['GET','OPTIONS']},
+            {url: /\/api\/orders(.*)/, methods: ['GET','OPTIONS']},
+            {url: /\/api\/orderitems(.*)/, methods: ['GET','OPTIONS']},
             '/api/signin',
             '/api/signup',
             
@@ -19,7 +21,7 @@ function authJwt(){
     })
 }
 async function isRevoked(req, payload, done) {
-    if(!payload.isAdmin) {
+    if(!payload.role) {
         done(null, true)
     }else {
         done();

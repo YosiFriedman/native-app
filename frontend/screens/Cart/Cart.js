@@ -1,5 +1,6 @@
+import React, {useContext} from "react";
 import { Body, Container, ListItem, Thumbnail, Left, Right } from "native-base";
-import React from "react";
+
 import {
   Text,
   View,
@@ -13,7 +14,12 @@ import { connect } from "react-redux";
 import CartItem from "./CartItem";
 import { SwipeListView } from "react-native-swipe-list-view";
 import * as actions from "../../Redux/Actions/cartActions";
+import AuthGlobal from '../../Context/store/AuthGlobal';
+import StyledButton from '../../components/StyledComponents/StyledButton'
 const Cart = (props) => {
+
+  const context = useContext(AuthGlobal)
+
   let total = 0;
   return (
     <>
@@ -60,13 +66,24 @@ const Cart = (props) => {
               <Text style={styles.price}>${total}</Text>
             </Left>
             <Right>
-              <Button title="נקה" onPress={() => props.clearCart()} />
+            <StyledButton medium danger onPress={() => props.clearCart()}>
+                <Text style={{color:"white"}} >נקה</Text>
+                </StyledButton>
+             
             </Right>
             <Right>
-              <Button
-                title="עבור לתשלום"
-                onPress={() => props.navigation.navigate("Checkout")}
-              />
+            {context.stateUser.isAuthenticated ?  
+            <StyledButton medium primary onPress={() => props.navigation.navigate("Checkout")}>
+            <Text style={{color:"white"}} >עבור לתשלום</Text>
+            </StyledButton> 
+           :
+              (
+                <StyledButton medium secondary onPress={() => props.navigation.navigate('User')}>
+                <Text style={{color:"white"}} >התחבר</Text>
+                </StyledButton>
+              )
+              }
+             
             </Right>
           </View>
         </Container>

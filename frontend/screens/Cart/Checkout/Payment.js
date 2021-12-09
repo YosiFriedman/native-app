@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from "react";
+import React, {useEffect,useState,useContext} from "react";
 import { View, Text,Button } from "react-native";
 import {
   Container,
@@ -15,11 +15,19 @@ import {
   Thumbnail,
   
 } from "native-base";
-import {connect} from 'react-redux'
-import * as actions from '../../../Redux/Actions/cartActions'
+import {connect} from 'react-redux';
+import * as actions from '../../../Redux/Actions/cartActions';
+import Toast from 'react-native-toast-message';
+import baseURL from '../../../assets/common/baseUrl';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import AuthGlobal from '../../../Context/store/AuthGlobal';
+
 const Payment = (props) => {
+  const context = useContext(AuthGlobal);
 const [orderItems, setOrderItems ] = useState();
- 
+const [user, setUser ] = useState();
+const [token, setToken] = useState()
  
   const [selected, setSelected] = useState();
   const [card, setCard] = useState();
@@ -32,18 +40,68 @@ const [orderItems, setOrderItems ] = useState();
     { name: "מאסטרקארד", value: "3" },
   ];
   useEffect(() => {
-    console.log(props.cartItems)
+    
     setOrderItems(props.cartItems)
+    if(context.stateUser.isAuthenticated){
+      setUser(context.stateUser.user.userId)
+    }else{
+      props.navigation.navigate("Cart");
+      Toast.show({
+        type:'error',
+        text1:"אנא התחבר קודם",
+        text2:" "
+      })
+    }
 
 }, [orderItems])
 console.log('the props',props.cartItems)
 
+const finalorder = props.cartItems;
+console.log(props.route.params)
 const confirm = () => {
-   setTimeout(() =>{
-     props.clearCart();
-     props.navigation.navigate("Cart")
-   },500) 
+  const order = {
+    orderItems:finalorder,
+    user:user
+  }
+
+  axios.post(`${baseURL}order`, order, {
+    headers:{Authorization: `Bearer ${token}`}
+  })
+  .then((res) => {
+    if(res.status == 200 || res.status == 201) {
+      Toast.show({
+        topOffset:60,
+        type:"success",
+       text1:"ההזמנה בוצעה בהצלחה",
+       text2:" "
+      })
+      setTimeout(() =>{
+        props.clearCart();
+        props.navigation.navigate("Cart")
+      },500) 
+    }
+  })
+  .catch((err) => {
+    Toast.show({
+      topOffset:60,
+      type:"error",
+      text1:"משהו השתבש",
+      text2:"אנא נסה שוב"
+    })
+  })
+
+  
 }
+useEffect(() => {
+  AsyncStorage.getItem("jwt")
+    .then((res) => {
+      setToken(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  
+}, []);
 
   return (
     <Container>

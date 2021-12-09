@@ -16,13 +16,16 @@ import AuthGlobal from '../../Context/store/AuthGlobal';
 import { logoutUser } from '../../Context/actions/Auth.Actions';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import baseURL from '../../assets/common/baseUrl';
-
+import OrderCard from '../../components/OrderCard';
 
 const ProfileScreen = (props) => {
 const context = useContext(AuthGlobal)
 const [userProfile, setUserProfile] = useState()
+const [orders, setOrders] = useState()
 
-useEffect(() => {
+useFocusEffect(
+  useCallback(() => {
+  console.log('user',context.stateUser.isAuthenticated)
   console.log('user',context.stateUser.isAuthenticated)
  
   if(
@@ -42,10 +45,21 @@ useEffect(() => {
   })
   .catch((error) => console.log(error))
 
+  axios.get(`${baseURL}orders`)
+  .then((res) => {
+    const data = res.data
+    const userOrders = data.filter(
+      (order) => order.user._id === context.stateUser.user.userId
+    );
+    setOrders(userOrders)
+  })
+  .catch((err) => console.log(err))
+
   return () => {
     setUserProfile();
+    setOrders();
   }
-}, [context.stateUser.isAuthenticated])
+}, [context.stateUser.isAuthenticated]))
   
 
   return (
@@ -82,6 +96,15 @@ useEffect(() => {
           <View style={styles.infoBox}>
             <Title>12</Title>
             <Caption>הזמנות</Caption>
+            {/* {orders ? (
+              orders.map((x) => {
+                return <OrderCard key ={x.id} {...x} editMode={false}/>;
+              })
+            ): (
+              <View>
+                <Text>no orders</Text>
+              </View>
+            )} */}
           </View>
       </View>
 

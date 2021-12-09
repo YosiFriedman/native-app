@@ -18,10 +18,16 @@ const userSchema = new mongoose.Schema({
         
     },
     
-    isAdmin: {
+    role: {
         type:String,
         required: true,
+       
     },
+    business:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Business',
+        
+    }
    
         
   

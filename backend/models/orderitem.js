@@ -12,6 +12,8 @@ const orderItemSchema = new mongoose.Schema(
         ref:'Product',
         
     },
+    
+
    
 },
 {timestamps: true}

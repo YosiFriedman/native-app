@@ -11,7 +11,7 @@ exports.create = async(req, res) => {
 }
 
 exports.list = async(req, res) => {
-    const orderitems = await OrderItem.find();
+    const orderitems = await OrderItem.find() .populate({path:'product'});
     if(!orderitems){
         res.status(500).json({success: false})
     }

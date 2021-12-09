@@ -93,7 +93,7 @@ const Products = (props) => {
     
     <View style={styles.container}>
         <View style={styles.buttonContainer}>
-            <StyledButton small secondary 
+            <StyledButton large secondary 
             onPress ={() => props.navigation.navigate("AdminOrders")}
             >
                 <Icon name="shopping-bag" size={18} color="white" />
@@ -101,7 +101,7 @@ const Products = (props) => {
             </StyledButton>
        
 
-        <StyledButton small secondary 
+        <StyledButton large secondary 
             onPress ={() => props.navigation.navigate("AdminProductFrorm")}
             >
                 <Icon name="plus" size={18} color="white" />
@@ -110,7 +110,7 @@ const Products = (props) => {
         
 
       
-        <StyledButton small secondary 
+        <StyledButton large secondary 
             onPress ={() => props.navigation.navigate("AdminCategories")}
             >
                 <Icon name="plus" size={18} color="white" />
