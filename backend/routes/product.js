@@ -4,7 +4,7 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 const Business = require('../models/business');
 const mongoose = require('mongoose')
-const { read,update,remove,list,count, featured }  = require("../controllers/product");
+const { read,update,remove,list,count, featured, productsByBusiness }  = require("../controllers/product");
 
 
 
@@ -108,6 +108,7 @@ router.put('/product/:id',uploadOptions.single('image'), async(req, res) => {
 )
 
 router.get('/product/:id',read);
+router.get('/productbybusiness/:id',productsByBusiness);
 router.get('/products',list);
 router.get('/products/count',count);
 router.get('/products/featured/:count',featured);

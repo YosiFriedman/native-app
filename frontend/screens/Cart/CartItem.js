@@ -4,10 +4,11 @@ import { Text, Left, Right, ListItem, Thumbnail, Body } from "native-base";
 
 const CartItem = (props) => {
   const data = props.item;
-  const [quantity, setQuantity] = useState(props.item.quantity);
-  const [business, setBusiness] = useState(props.item.item.product.business._id);
+  const [quantity, setQuantity] = useState(props.item.item.quantity);
+  const [business, setBusiness] = useState(props);
+  const [status, setStatus] = useState(props.item.status);
   console.log('business',props.item)
-  console.log('carddataid',props.item.item.product.business._id)
+  console.log('carddataid',props)
   return (
     <ListItem style={styles.listItem} key={Math.random()} avatar>
       <Left>
@@ -25,6 +26,7 @@ const CartItem = (props) => {
         </Left>
         <Right>
           <Text>₪{data.item.product.price}</Text>
+          <Text>{quantity}</Text>
         </Right>
       </Body>
     </ListItem>

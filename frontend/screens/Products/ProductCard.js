@@ -13,6 +13,8 @@ import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
 const ProductCard = (props) => {
   const { name, price, image, description, countInStock } = props;
+  
+  console.log('PRODUCTCARD',props)
   return (
     <Card
       style={{
@@ -22,6 +24,7 @@ const ProductCard = (props) => {
         borderRadius: 10,
       }}
     >
+    {console.log(props)}
       <Card.Content>
         <Card.Title
           title={name}
@@ -34,7 +37,10 @@ const ProductCard = (props) => {
       />
 
       <Card.Actions>
-        <Button>ראה עוד</Button>
+        <Button
+         onPress={()=>
+          props.navigation.navigate("Product Detail", {item:props})}>
+           ראה עוד</Button>
         <Button onPress={() => {
           props.addItemToCart(props)
         }}>הוסף לעגלה</Button>
@@ -45,7 +51,7 @@ const ProductCard = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addItemToCart: (product) => dispatch(actions.addToCart({quantity: 1, product})),
+    addItemToCart: (product) => dispatch(actions.addToCart({quantity: 2, product, business:product.business,status:'ממתין'})),
   };
 };
 export default connect(null, mapDispatchToProps)(ProductCard);

@@ -11,13 +11,23 @@ exports.create = async(req, res) => {
 }
 
 exports.list = async(req, res) => {
-    const orderitems = await OrderItem.find() .populate({path:'product'});
+    const orderitems = await OrderItem.find().populate({path:'product'});
     if(!orderitems){
         res.status(500).json({success: false})
     }
     res.send(orderitems)
   
    }
+
+   exports.BusinessOrderList = async(req, res) => {
+    const orderitems = await OrderItem.find().where({business:req.params.id});
+    if(!orderitems){
+        res.status(500).json({success: false})
+    }
+    res.send(orderitems)
+  
+   }
+ 
  
 
 exports.remove = (req, res) => {
@@ -32,4 +42,20 @@ exports.remove = (req, res) => {
     return res.status(400).json({success:false, err:err})
  })
 }
+
+exports.update = async(req, res) => {
+    const orderitem = await OrderItem.findByIdAndUpdate(
+        req.params.id,
+        {
+            
+            status:req.body.status
+        },
+        {new: true}
+    )
+    if(!orderitem){
+        res.status(500).json({success: false})
+    }
+    res.send(orderitem)
+  
+   }
 

@@ -89,7 +89,16 @@ exports.featured = async(req, res) => {
     }  
     res.send({productsFeatures})
 }
-    
+
+
+exports.productsByBusiness = async(req, res) => {
+    const product = await Product.find().where({business:req.params.id});
+    if(!product){
+        res.status(500).json({success: false})
+    }
+    res.send(product)
+  
+   }
    
 
 

@@ -12,7 +12,15 @@ const orderItemSchema = new mongoose.Schema(
         ref:'Product',
         
     },
-    
+    business: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Business',
+        
+    },
+    status:{
+        type:String,
+        default:'ממתין'
+    },
 
    
 },

@@ -54,7 +54,7 @@ const [token, setToken] = useState()
     }
 
 }, [orderItems])
-console.log('the props',props.cartItems)
+console.log('orderitems state',props.cartItems)
 
 const finalorder = props.cartItems;
 console.log(props.route.params)

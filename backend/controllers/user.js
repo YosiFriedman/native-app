@@ -13,6 +13,7 @@ exports.signin = async (req, res) => {
       {
         userId: user.id,
         role: user.role,
+        business: user.business
       },
       secret,
       { expiresIn: "1d" }

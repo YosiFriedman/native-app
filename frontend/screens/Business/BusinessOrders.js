@@ -7,22 +7,18 @@ import OrderCard from '../../components/OrderCard';
 import AuthGlobal from '../../Context/store/AuthGlobal';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useEffect } from 'react';
+import OrderCardBusiness from '../../components/OrderCardBusiness';
 
 const BusinessOrders = (props) => {
     const context = useContext(AuthGlobal)
-    const [userProfile, setUserProfile] = useState()
+    
     const [token, setToken] = useState()
     const [orderList, setOrders] = useState();
 
     const getOrders = () => {
-        axios.get(`${baseURL}orders`)
+        axios.get(`${baseURL}orderitems/${context.stateUser.user.business}`)
         .then((res) => {
-          const data = res.data
-          const userOrders = data.filter(
-            (order) => order.orderItems.business === userProfile.business
-          
-          );
-          setOrders(userOrders)
+          setOrders(res.data)
         })
         .catch((err) => console.log(err))
       
@@ -31,25 +27,16 @@ const BusinessOrders = (props) => {
 
   
         useEffect(() => {
-        console.log('user',context.stateUser.isAuthenticated)
+        
         console.log('userr',context.stateUser.user)
-        console.log('userProfile',userProfile)
-        console.log('orderlist',orderList)
+       
+       
         
        
-        AsyncStorage.getItem("jwt")
-        .then((res)=>{
-          console.log('res', res)
-          axios.get(`${baseURL}user/${context.stateUser.user.userId}`,{
-            headers: {Authorization: `Bearer ${res}`},
-          })
-          .then((user) => setUserProfile(user.data))
-        })
-        .catch((error) => console.log(error))
       
         getOrders()
         return () => {
-          setUserProfile();
+      
           setOrders();
         }
       }, [context.stateUser.isAuthenticated])
@@ -59,7 +46,7 @@ const BusinessOrders = (props) => {
            <FlatList
            data={orderList}
            renderItem={({item}) => (
-            <OrderCard navigation = {props.navigation} {...item} editMode={true}/>
+            <OrderCardBusiness navigation = {props.navigation} {...item} editMode={true}/>
            )}
 keyExtractor = {(item) => item.id}
            />

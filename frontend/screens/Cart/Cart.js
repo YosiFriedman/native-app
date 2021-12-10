@@ -20,9 +20,14 @@ const Cart = (props) => {
 
   const context = useContext(AuthGlobal)
 
-  let total = 0;
+ let total = 0;
+ props.cartItems.forEach(cart => {
+   return (total += (cart.product.price * cart.quantity))
+ })
+console.log('cartitemscart',props.cartItems)
   return (
     <>
+    
       {props.cartItems.length ? (
         <Container>
           {/* {console.log('props',props.cartItems)}
@@ -43,10 +48,18 @@ const Cart = (props) => {
            
             renderHiddenItem={(data) => (
               <View style={styles.hiddenContainer}>
-                <TouchableOpacity  style={styles.hiddenButton} onPress={()=> props.removeFromCart(data.item)}>
+                {/* <TouchableOpacity  style={styles.hiddenButton} onPress={()=> props.removeFromCart(data.item)}>
                   <Icon
                     name="trash"
                     color={"white"}
+                    size={30}
+                 
+                  />
+                </TouchableOpacity> */}
+                <TouchableOpacity  style={styles.hiddenButton} onPress={()=> props.addQuantity(data.item)}>
+                  <Icon
+                    name="trash"
+                    color={"black"}
                     size={30}
                  
                   />
@@ -105,7 +118,9 @@ const mapStateToProps = (state) => {
 const mapDispathToProps = (dispatch) => {
   return {
     clearCart: () => dispatch(actions.clearCart()),
-    removeFromCart: (item) => dispatch(actions.removeFromCart(item))
+    removeFromCart: (item) => dispatch(actions.removeFromCart(item)),
+    addQuantity: (item) => dispatch(actions.addQuantity(item)),
+    
   };
 };
 

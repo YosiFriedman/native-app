@@ -14,18 +14,20 @@ const Stack = createStackNavigator();
 function MyTabs() {
   return (
     <Stack.Navigator>
-         <Stack.Screen
-        name="BusinessOrders"
-        component={BusinessOrders}
-        options={{ headerShown: true, title: "תשלום" }}
-    
-      />
+       
       <Stack.Screen
         name="BusinessProducts"
         component={BusinessProducts}
         options={{ headerShown: true, title: "תשלום" }}
       />
+        <Stack.Screen
+        name="BusinessOrders"
+        component={BusinessOrders}
+        options={{ headerShown: true, title: "תשלום" }}
+    
+      />
     </Stack.Navigator>
+    
   );
 }
 

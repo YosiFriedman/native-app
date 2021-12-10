@@ -6,7 +6,9 @@ exports.create = async(req, res) => {
     const orderItemsIds = Promise.all(req.body.orderItems.map(async (orderitem) =>{
         let newOrderItem = new OrderItem({
             quantity: orderitem.quantity,
-            product: orderitem.product
+            product: orderitem.product,
+            business: orderitem.business,
+            status: orderitem.status
         })
         newOrderItem = await newOrderItem.save();
 
@@ -48,6 +50,9 @@ exports.list = async(req, res) => {
     res.send(orderList)
   
    }
+
+
+
    exports.read = async(req, res) => {
     const order = await Order.findById(req.params.id)
     .populate('user', 'name')
@@ -112,5 +117,6 @@ exports.update = async(req, res) => {
     
     res.send({orderCount})
      }
+
 
   

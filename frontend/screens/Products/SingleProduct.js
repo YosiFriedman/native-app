@@ -17,16 +17,25 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Button, Text, Row } from "native-base";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { connect } from "react-redux";
+import * as actions from "../../Redux/Actions/cartActions";
 const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 55;
 const MAX_HEIGHT = 350;
 
 const SingleProduct = ( props ) => {
   const [item, setItem] = useState(props.route.params.item);
+  const [quantity, setQuantity] = useState(0);
  
   const [availability, setAvailability] = useState('');
   const navTitleView = useRef(null);
 
+  const reduceQuantity = () => {
+    setQuantity(quantity - 1)
+  }
+  const addQuantity = () => {
+    setQuantity(quantity + 1)
+  }
+console.log('SingleProduct',props.route.params.item)
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -75,11 +84,11 @@ const SingleProduct = ( props ) => {
               <Text style={{ color: "black" }}>מלאי מוגבל</Text>
               <Row>
           <View style={styles.actionBtn}>
-            <Icon name="remove" size={25} style={{ color: "white" }} />
+            <Icon name="remove" size={25} style={{ color: "white" }} onPress={() => reduceQuantity()} />
           </View>
-          <Text style={{ fontWeight: "bold", fontSize: 18, margin: 2 }}>3</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18, margin: 2 }}>{quantity}</Text>
           <View style={styles.actionBtn}>
-            <Icon name="add" size={25} style={{ color: "white" }} />
+            <Icon name="add" size={25} style={{ color: "white" }} onPress={() => addQuantity()}/>
           </View>
         </Row>
             </View>
@@ -88,7 +97,12 @@ const SingleProduct = ( props ) => {
         <View style={{ marginHorizontal: 30 }}>
           <TouchableOpacity activeOpacity={0.8}>
             <View style={styles.btnContainer}>
-              <Text style={styles.title}>הוסף לעגלה</Text>
+            <Button onPress={() => {
+          props.addItemToCart(item)
+        }}>
+          <Text>asdf</Text>
+        </Button>
+        {console.log('props',props)}
             </View>
           </TouchableOpacity>
         </View>
@@ -96,8 +110,13 @@ const SingleProduct = ( props ) => {
     </View>
   );
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItemToCart: (product) => dispatch(actions.addToCart({quantity: 1, product, business:product.business,status:'ממתין'})),
+  };
+};
 
-export default SingleProduct;
+export default connect(null, mapDispatchToProps)(SingleProduct);
 
 const styles = StyleSheet.create({
   container: {

@@ -14,6 +14,7 @@ function authJwt(){
             {url: /\/api\/businesslist(.*)/, methods: ['GET','OPTIONS']},
             {url: /\/api\/orders(.*)/, methods: ['GET','OPTIONS']},
             {url: /\/api\/orderitems(.*)/, methods: ['GET','OPTIONS']},
+            {url: /\/api\/productbybusiness(.*)/, methods: ['GET','OPTIONS']},
             '/api/signin',
             '/api/signup',
             
