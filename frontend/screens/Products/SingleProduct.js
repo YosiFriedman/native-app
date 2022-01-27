@@ -1,4 +1,4 @@
-import React, { useRef,useState } from "react";
+import React, { useRef,useState, useContext,useEffect } from "react";
 import {
   View,
   Image,
@@ -11,12 +11,13 @@ import {
 import HeaderImageScrollView, {
   TriggeringView,
 } from "react-native-image-header-scroll-view";
-
+import Toast from 'react-native-toast-message';
 import * as Animatable from "react-native-animatable";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Button, Text, Row } from "native-base";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import AuthGlobal from '../../Context/store/AuthGlobal';
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
 const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 55;
@@ -24,18 +25,44 @@ const MAX_HEIGHT = 350;
 
 const SingleProduct = ( props ) => {
   const [item, setItem] = useState(props.route.params.item);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
  
   const [availability, setAvailability] = useState('');
   const navTitleView = useRef(null);
-
+  const context = useContext(AuthGlobal)
   const reduceQuantity = () => {
-    setQuantity(quantity - 1)
+    
+    if(quantity< 1){
+      setQuantity(1)
+    } else {
+      setQuantity(quantity - 1)
+    }
+    
+    
+    
+    Object.assign(item, {quantity: quantity});
+    // setItem({ ...item, quantity: quantity });
   }
   const addQuantity = () => {
+    if(quantity > item.countinstock){
+      Toast.show({
+        topOffset:60,
+        type:"error",
+        text1:`כמות המלאי מוגבלת ל ${item.countinstock} הטבות `,
+        text2:"אנא הזמינו בכמות התואמת למכסה"
+      })
+      return;
+    }
     setQuantity(quantity + 1)
+    Object.assign(item, {quantity: quantity});
   }
+  useEffect(() => {
+    Object.assign(item, {quantity: quantity});
+    console.log('newitem',item)
+  }, [])
 console.log('SingleProduct',props.route.params.item)
+console.log('countinstockkkkk',item.countinstock)
+console.log('updateitem',item)
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -55,6 +82,7 @@ console.log('SingleProduct',props.route.params.item)
         renderFixedForeground={() => (
           <Animatable.View style={styles.navTitleView} ref={navTitleView}>
             <Text style={styles.navTitle}>{item.name}</Text>
+          
           </Animatable.View>
         )}
       >
@@ -76,6 +104,7 @@ console.log('SingleProduct',props.route.params.item)
         </TriggeringView>
         <View style={[styles.section, styles.sectionLarge]}>
           <Text style={styles.sectionContent}>{item.description}</Text>
+          
         </View>
        
         <View style={{ marginHorizontal: 30 }}>
@@ -86,7 +115,7 @@ console.log('SingleProduct',props.route.params.item)
           <View style={styles.actionBtn}>
             <Icon name="remove" size={25} style={{ color: "white" }} onPress={() => reduceQuantity()} />
           </View>
-          <Text style={{ fontWeight: "bold", fontSize: 18, margin: 2 }}>{quantity}</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18, margin: 2 }}>{item.quantity}</Text>
           <View style={styles.actionBtn}>
             <Icon name="add" size={25} style={{ color: "white" }} onPress={() => addQuantity()}/>
           </View>
@@ -94,25 +123,45 @@ console.log('SingleProduct',props.route.params.item)
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ marginHorizontal: 30 }}>
-          <TouchableOpacity activeOpacity={0.8}>
-            <View style={styles.btnContainer}>
-            <Button onPress={() => {
-          props.addItemToCart(item)
-        }}>
-          <Text>asdf</Text>
-        </Button>
-        {console.log('props',props)}
+        
+        {context.stateUser.isAuthenticated ?  
+             <View style={{ marginHorizontal: 100 }}>
+         
+             <View style={styles.btnContainer}>
+             <Button style={styles.btnContainer} onPress={() => {
+           props.addItemToCart(item); props.navigation.navigate("Checkout");
+         }}>
+            <Text style={{paddingLeft:55}}>הזמינו עכשיו</Text>
+         </Button>
+         {console.log('props',props)}
+             </View>
+            
+           
+         </View>
+           :
+              (
+                <View style={{ marginHorizontal: 100 }}>
+         
+                <View style={styles.btnContainer}>
+                <Button style={styles.btnContainer} onPress={() => props.navigation.navigate('User')}>
+               <Text style={{paddingLeft:45}}>התחבר להזמנה</Text>
+            </Button>
+            {console.log('props',props)}
+                </View>
+               
+              
             </View>
-          </TouchableOpacity>
-        </View>
+           
+              )
+              }
+       
       </HeaderImageScrollView>
     </View>
   );
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    addItemToCart: (product) => dispatch(actions.addToCart({quantity: 1, product, business:product.business,status:'ממתין'})),
+    addItemToCart: (product) => dispatch(actions.addToCart({quantity:product.quantity, product, business:product.business,status:'ממתין'})),
   };
 };
 

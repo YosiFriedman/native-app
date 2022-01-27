@@ -114,7 +114,7 @@ values.password = startpassword
             </View>
            
             <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+            <Text style={styles.errorMsg}>שם משתמש צריך להיות בעל 4 אותיות לפחות.</Text>
             </Animatable.View>
     
             

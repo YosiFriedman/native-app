@@ -51,7 +51,7 @@ const ProductCard = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addItemToCart: (product) => dispatch(actions.addToCart({quantity: 2, product, business:product.business,status:'ממתין'})),
+    addItemToCart: (product) => dispatch(actions.addToCart({quantity: 1, product, business:product.business,status:'ממתין'})),
   };
 };
 export default connect(null, mapDispatchToProps)(ProductCard);

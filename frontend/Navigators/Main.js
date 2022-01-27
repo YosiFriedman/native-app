@@ -14,6 +14,7 @@ import CartIcon from '../components/CartIcon';
 import AdminNavigator from "./AdminNavigator";
 import BusinessNavigator from './BusinessNavigator';
 import AuthGlobal from '../Context/store/AuthGlobal';
+
 const icon = require("../assets/icons/fastfood.png");
 const Tab = createMaterialBottomTabNavigator();
 const COLORS = {
@@ -39,56 +40,62 @@ const Main = () => {
   console.log('admin',context.stateUser.user)
   return (
     <Tab.Navigator
-    initialRouteName="Home"
-    tabBarOptions={{
-      keyboardHidesTabBar: true,
-      showLabel: false,
-      activeTintColor: "blue",
-    }}
+    initialRouteName="Feed"
+      activeColor="#FF6347"
+      barStyle={{ backgroundColor: 'white' }}
+     
+      
   >
     <Tab.Screen
       name="Home"
       component={HomeNavigator}
       options={{
+        tabBarLabel:false,
+        tabBarColor: 'red',
         tabBarIcon: ({ color }) => (
           <Icon
             name="home"
             style={{ position: "relative" }}
             color={color}
-            size={30}
+            size={25}
           />
         ),
       }}
     />
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Cart"
       component={CartNavigator}
       options={{
+        tabBarLabel:false,
         tabBarIcon: ({ color }) => (
             <View>
-<Icon name="shopping-cart" color={color} size={30} />
+<Icon name="shopping-bag" color={color} size={25} style={{display:'none'}}/>
             
          <CartIcon/>
          </View>
         ),
       }}
-    />
+    /> */}
     {context.stateUser.user.role === "2" ? (
       <Tab.Screen
       name="Admin"
       component={AdminNavigator}
       options={{
+        
+        tabBarLabel:false,
         tabBarIcon: ({ color }) => (
-          <Icon name="cog" color={color} size={30} />
+          <Icon name="cog" color={color} size={25} />
         ),
       }}
     />
     ): null}
       {context.stateUser.user.role === "1" ? (
       <Tab.Screen
+      
       name="Admin"
       component={BusinessNavigator}
       options={{
+        tabBarLabel:false,
         tabBarIcon: ({ color }) => (
           <Icon name="cog" color={color} size={30} />
         ),
@@ -101,6 +108,7 @@ const Main = () => {
       component={UserNavigator}
      
       options={{
+        tabBarLabel:false,
         tabBarIcon: ({ color }) => (
           <Icon name="user" color={color} size={30} />
         ),

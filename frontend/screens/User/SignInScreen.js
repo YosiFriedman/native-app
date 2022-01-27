@@ -146,7 +146,7 @@ useEffect(()=>{
         {data.isValidUser ? null : (
           <Animatable.View animation="fadeInLeft" duration={500}>
             <Text style={styles.errorMsg}>
-              Username must be 4 characters long.
+              שם משתמש צריך להיות בעל 4 אותיות לפחות.
             </Text>
           </Animatable.View>
         )}
@@ -187,14 +187,14 @@ useEffect(()=>{
         {data.isValidPassword ? null : (
           <Animatable.View animation="fadeInLeft" duration={500}>
             <Text style={styles.errorMsg}>
-              Password must be 8 characters long.
+             סיסמא חייבת להיות בעלת לפחות 8 אותיות.
             </Text>
           </Animatable.View>
         )}
 
         <TouchableOpacity>
           <Text style={{ color: "#FF6347", marginTop: 15 }}>
-            Forgot password?
+            שכחת סיסמא?
           </Text>
         </TouchableOpacity>
         <View style={styles.button}>
@@ -212,7 +212,7 @@ useEffect(()=>{
                 },
               ]}
             >
-              Sign In
+             התחבר
             </Text>
           </TouchableOpacity>
 
@@ -235,7 +235,7 @@ useEffect(()=>{
                 },
               ]}
             >
-              Sign Up
+              להרשמה
             </Text>
           </TouchableOpacity>
         </View>

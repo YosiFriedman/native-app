@@ -1,5 +1,5 @@
 import React, {useEffect,useState,useContext} from "react";
-import { View, Text,Button } from "react-native";
+import { View, Text,Button,Alert } from "react-native";
 import {
   Container,
   Header,
@@ -22,13 +22,13 @@ import baseURL from '../../../assets/common/baseUrl';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import AuthGlobal from '../../../Context/store/AuthGlobal';
-
+import { useFocusEffect } from '@react-navigation/native';
 const Payment = (props) => {
-  const context = useContext(AuthGlobal);
+const context = useContext(AuthGlobal);
 const [orderItems, setOrderItems ] = useState();
 const [user, setUser ] = useState();
 const [token, setToken] = useState()
- 
+
   const [selected, setSelected] = useState();
   const [card, setCard] = useState();
 
@@ -39,6 +39,14 @@ const [token, setToken] = useState()
     { name: "ויזה", value: "2" },
     { name: "מאסטרקארד", value: "3" },
   ];
+  useFocusEffect(
+    React.useCallback(() => {
+      
+      return () => {
+        props.clearCart();
+      };
+    }, [])
+  );
   useEffect(() => {
     
     setOrderItems(props.cartItems)
@@ -77,7 +85,7 @@ const confirm = () => {
       })
       setTimeout(() =>{
         props.clearCart();
-        props.navigation.navigate("Cart")
+        props.navigation.navigate("Home")
       },500) 
     }
   })
@@ -108,10 +116,11 @@ useEffect(() => {
       <Header>
         <Body>
           <Title>סיכום הזמנה</Title>
+         
         </Body>
       </Header>
       <Content>
-<Text>מוצרים:</Text>
+{/* <Text>מוצרים:</Text> */}
 {props.cartItems.map((x) =>{
     return(
 <ListItem key={x.product._id}
@@ -125,6 +134,7 @@ avatar>
         </Left>
         <Right>
             <Text>{x.product.price}</Text>
+            <Text>{x.quantity}</Text>
         </Right>
     </Body>
 

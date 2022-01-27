@@ -19,7 +19,10 @@ import Feather from 'react-native-vector-icons/Feather';
 const SignInScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
-        username: '',
+        name:'',
+        phone:'',
+        idnumber:'',
+        email: '',
         password: '',
         confirm_password: '',
         check_textInputChange: false,
@@ -31,13 +34,13 @@ const SignInScreen = ({navigation}) => {
         if( val.length !== 0 ) {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: true
             });
         } else {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: false
             });
         }
@@ -75,14 +78,14 @@ const SignInScreen = ({navigation}) => {
       <View style={styles.container}>
           <StatusBar backgroundColor='#FF6347' barStyle="light-content"/>
         <View style={styles.header}>
-            <Text style={styles.text_header}>Register Now!</Text>
+            <Text style={styles.text_header}>עוד קצת ואתם מתחילים להנות מההטבות הכי שוות!</Text>
         </View>
         <Animatable.View 
             animation="fadeInUpBig"
             style={styles.footer}
         >
             <ScrollView>
-            <Text style={styles.text_footer}>Username</Text>
+            <Text style={styles.text_footer}>שם משתמש</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
@@ -110,7 +113,7 @@ const SignInScreen = ({navigation}) => {
 
             <Text style={[styles.text_footer, {
                 marginTop: 35
-            }]}>Password</Text>
+            }]}>סיסמא</Text>
             <View style={styles.action}>
                 <Feather 
                     name="lock"
@@ -145,7 +148,7 @@ const SignInScreen = ({navigation}) => {
 
             <Text style={[styles.text_footer, {
                 marginTop: 35
-            }]}>Confirm Password</Text>
+            }]}>וודא סיסמא</Text>
             <View style={styles.action}>
                 <Feather 
                     name="lock"
@@ -207,7 +210,7 @@ const SignInScreen = ({navigation}) => {
                 >
                     <Text style={[styles.textSign, {
                         color: '#FF6347'
-                    }]}>Sign In</Text>
+                    }]}>להתחברות</Text>
                 </TouchableOpacity>
             </View>
             </ScrollView>
@@ -227,7 +230,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
-        paddingBottom: 50
+        paddingBottom: 30
     },
     footer: {
         flex: Platform.OS === 'ios' ? 3 : 5,

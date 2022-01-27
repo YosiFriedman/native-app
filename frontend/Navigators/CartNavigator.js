@@ -10,15 +10,15 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Cart"
         component={Cart}
         options={{ headerShown: true, title: "FoodFinder" }}
-      />
+      /> */}
       <Stack.Screen
         name="Checkout"
         component={CheckoutNavigator}
-        options={{ headerShown: true, title: "Checkout" }}
+        options={{ headerShown: true, title: "תשלום" }}
       />
     </Stack.Navigator>
   );

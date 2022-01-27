@@ -5,7 +5,8 @@ import HomeScreen from '../screens/HomeScreen'
 
 import SingleProduct from '../screens/Products/SingleProduct';
 import ProductContainer from '../screens/Products/ProductContainer';
-
+import CheckoutNavigator from "./CheckoutNavigator";
+import Payment from "../screens/Cart/Checkout/Payment";
 const Stack =createStackNavigator();
 
 function MyStack(){
@@ -22,6 +23,11 @@ function MyStack(){
             component={SingleProduct}
             options={{headerShown: true,title: 'FoodFinder',}}
             
+            />
+              <Stack.Screen
+              name="Checkout"
+              component={Payment}
+              options={{ headerShown: true, title: "Checkout" }}
             />
         </Stack.Navigator>
     )
