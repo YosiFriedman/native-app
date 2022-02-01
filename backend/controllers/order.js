@@ -29,6 +29,8 @@ exports.create = async(req, res) => {
         status: req.body.status,
         totalPrice: totalPrice,
         user: req.body.user,
+        business:req.body.business,
+        ordernumber: Math.floor(Math.random() * Math.floor(Math.random() * Date.now())),
         dateOrdered: req.body.dateOrdered,
         orderItems:orderItemsIdsResolved
     })
@@ -43,7 +45,7 @@ exports.create = async(req, res) => {
 exports.list = async(req, res) => {
     const orderList = await Order.find()
     .populate('user', 'name').sort('dateOrdered')
-    .populate({path:'orderItems', populate:{path:'product',populate:'category'}});;
+    .populate({path:'orderItems', populate:{path:'product',populate:'category',populate:'business'}});;
     if(!orderList){
         res.status(500).json({success: false})
     }
@@ -117,6 +119,16 @@ exports.update = async(req, res) => {
     
     res.send({orderCount})
      }
+
+     exports.BusinessOrderList = async(req, res) => {
+        const orders = await Order.find().where({business:req.params.id}).populate({path:'orderItems', populate:{path:'product',populate:'category',populate:'business'}});;
+        
+        if(!orders){
+            res.status(500).json({success: false})
+        }
+        res.send(orders)
+      
+       }
 
 
   

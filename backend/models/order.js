@@ -31,6 +31,15 @@ const orderSchema = new mongoose.Schema(
         ref:'OrderItem',
         required: true
     }],
+    business: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Business',
+        
+    },
+    ordernumber:{
+        type:Number,
+        unique:true,
+    },
    
 },
 {timestamps: true}

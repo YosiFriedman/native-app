@@ -26,6 +26,10 @@ const productSchema = mongoose.Schema({
         type:String,
         default: ''
     }],
+    originalprice:{
+        type:Number,
+        default: 0
+    },
     price:{
         type:Number,
         default: 0
@@ -57,6 +61,16 @@ const productSchema = mongoose.Schema({
         type:Date,
         default: Date.now
     },
+    expirydate:{
+        type:Date,
+    },
+    howtouse:{
+        type:String,
+    },
+    additionalcomments:{
+        type:String,
+    }
+
      
     
 })

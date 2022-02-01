@@ -91,7 +91,8 @@ const HomeScreen = (props) => {
         <View style={styles.cardsWrapper}>
         <Text
           style={{
-            alignSelf: "center",
+            textAlign: "right",
+            marginRight:30,
             fontSize: 18,
             fontWeight: "bold",
             color: "#333",

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator} from '@react-navigation/stack'
 
-import ProfileScreen from '../screens/User/ProfileScreen'
+import MyOrders from "../screens/User/MyOrders";
 
 const Stack =createStackNavigator();
 
@@ -9,15 +9,14 @@ function MyStack(){
     return(
         <Stack.Navigator>
             <Stack.Screen
-            name="פרופיל"
-            component={ProfileScreen}
-            options={{headerShown: true,title: 'FoodFinder',}}
-            
-            />
+        name="MyOrders"
+        component={MyOrders}
+        options={{ headerShown: false }}
+      />
         </Stack.Navigator>
     )
 }
 
-export default function ProfileNavigator(){
+export default function MyOrdersNavigator(){
     return <MyStack/>
 }

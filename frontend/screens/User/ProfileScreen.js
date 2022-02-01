@@ -1,5 +1,5 @@
 import React, {useContext, useState, useCallback, useEffect} from 'react';
-import {View, SafeAreaView, StyleSheet,Button} from 'react-native';
+import {View, SafeAreaView, StyleSheet,ImageBackground} from 'react-native';
 import {
   Avatar,
   Title,
@@ -15,6 +15,7 @@ import axios from 'axios';
 import AuthGlobal from '../../Context/store/AuthGlobal';
 import { logoutUser } from '../../Context/actions/Auth.Actions';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import baseURL from '../../assets/common/baseUrl';
 import OrderCard from '../../components/OrderCard';
 
@@ -22,7 +23,7 @@ const ProfileScreen = (props) => {
 const context = useContext(AuthGlobal)
 const [userProfile, setUserProfile] = useState()
 const [orders, setOrders] = useState()
-
+const image = { uri: "https://reactjs.org/logo-og.png" };
 useFocusEffect(
   useCallback(() => {
   console.log('user',context.stateUser.isAuthenticated)
@@ -54,7 +55,7 @@ useFocusEffect(
     setOrders(userOrders)
   })
   .catch((err) => console.log(err))
-
+  
   return () => {
     setUserProfile();
     setOrders();
@@ -63,30 +64,33 @@ useFocusEffect(
   
 
   return (
+    <>
+   
     <SafeAreaView style={styles.container}>
 {console.log('userprofile',userProfile)}
+
       <View style={styles.userInfoSection}>
-        <View style={{flexDirection: 'row', marginTop: 15}}>
+     
+          <View style={{textAlign:'center', paddingTop:15}}>
           <Avatar.Image 
             source={{
-              uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+              uri: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
             }}
             size={80}
           />
-          <View style={{marginLeft: 20}}>
-            <Title style={[styles.title, {
-              marginTop:15,
-              marginBottom: 5,
+          
+          <Title style={[styles.title, {
+             
             }]}>{userProfile ? userProfile.name : ""}</Title>
             
           </View>
-        </View>
+       
       </View>
 
       
 
       <View style={styles.infoBoxWrapper}>
-          <View style={[styles.infoBox, {
+          {/* <View style={[styles.infoBox, {
             borderRightColor: '#dddddd',
             borderRightWidth: 1
           }]}>
@@ -96,25 +100,17 @@ useFocusEffect(
           <View style={styles.infoBox}>
             <Title>12</Title>
             <Caption>הזמנות</Caption>
-            {/* {orders ? (
-              orders.map((x) => {
-                return <OrderCard key ={x.id} {...x} editMode={false}/>;
-              })
-            ): (
-              <View>
-                <Text>no orders</Text>
-              </View>
-            )} */}
-          </View>
+           
+          </View> */}
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableRipple onPress={() => {}}>
+        {/* <TouchableRipple onPress={() => {props.navigation.navigate('MyOrders')}}>
           <View style={styles.menuItem}>
             <Icon name="heart-outline" color="#FF6347" size={25}/>
             <Text style={styles.menuItemText}>הזמנות שלי</Text>
           </View>
-        </TouchableRipple>
+        </TouchableRipple> */}
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Icon name="credit-card" color="#FF6347" size={25}/>
@@ -130,20 +126,24 @@ useFocusEffect(
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name="settings-outline" color="#FF6347" size={25}/>
+            <Icon name="account-group" color="#FF6347" size={25}/>
             <Text style={styles.menuItemText}>אודותינו</Text>
           </View>
         </TouchableRipple>
-        <Button
-                title={"התנתק"}
-                onPress={() => [
+        <TouchableRipple onPress={() => [
                   AsyncStorage.removeItem("jwt"),
                   logoutUser(context.dispatch),
                 console.log('after press',  context.stateUser.isAuthenticated )
-                ]}
-              />
+                ]}>
+          <View style={styles.menuItem}>
+            <Icon name="exit-to-app" color="#FF6347" size={25}/>
+            <Text style={styles.menuItemText}>התנתק</Text>
+          </View>
+        </TouchableRipple>
+       
       </View>
     </SafeAreaView>
+    </>
   );
 };
 
@@ -154,12 +154,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userInfoSection: {
-    paddingHorizontal: 30,
-    marginBottom: 25,
+    
+    paddingHorizontal: 160,
+   
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    textAlign:'center'
   },
   caption: {
     fontSize: 14,
@@ -173,8 +175,7 @@ const styles = StyleSheet.create({
   infoBoxWrapper: {
     borderBottomColor: '#dddddd',
     borderBottomWidth: 1,
-    borderTopColor: '#dddddd',
-    borderTopWidth: 1,
+   
     flexDirection: 'row',
     height: 100,
   },

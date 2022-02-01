@@ -12,7 +12,7 @@ background: transparent;
 ${(props)=>
     props.primary && 
     css`
-    background: #5cb85c
+    background: #FF6347
     `
 
 }

@@ -7,45 +7,132 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
-import { Container, Content, Icon, Thumbnail } from "native-base";
+import { Container, Content, Row, Thumbnail } from "native-base";
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
 const ProductCard = (props) => {
-  const { name, price, image, description, countInStock } = props;
+  const { name, price, image,originalprice, description, countInStock } = props;
   
   console.log('PRODUCTCARD',props)
   return (
     <Card
+    elevation={5}
       style={{
-        width: 300,
-        margin: 10,
+        width: 270,
+        marginRight: 20,
         direction: "rtl",
         borderRadius: 10,
       }}
     >
     {console.log(props)}
-      <Card.Content>
+   
+      <Card.Cover style={{width:270, height: 200,borderTopRightRadius:15,borderTopLeftRadius:15}}
+        source={{ uri: image ? image : "https://picsum.photos/700" }}
+      />
+<View style={{
+          position:'absolute',
+          bottom:25,
+          height:50,
+          width:100,
+          borderTopLeftRadius:25,
+          borderBottomRightRadius:10,
+          alignItems:'center',
+          justifyContent:'center',
+          marginLeft:180
+        }}>
+         
+             <Text style={{fontSize:20,fontWeight:'bold',color:'#FF6347'}}>{price}₪</Text>
+             <Text style={{textDecorationLine:'line-through',}}>{originalprice}₪</Text> 
+           
+        </View>
+<Card.Content>
         <Card.Title
+        
           title={name}
           subtitle={description}
           right={(props) => <Thumbnail style={{ width: 70 }} />}
         />
+         <View style={{
+          alignItems:'right',
+          justifyContent:'right',
+          marginLeft:12,
+          flexDirection:'row'
+          
+        }}>      
+         <Icon name="place" size={10} style={{ color: "black",paddingRight:2,paddingTop:2}}> </Icon> 
+         <Text style={{fontSize:12,fontWeight:'bold',color:'#FF6347',direction:'rtl'}}>{props.business.name} </Text>
+         {/* {props.business.address} */}
+  
+      
+         
+       
+      </View>
       </Card.Content>
-      <Card.Cover
-        source={{ uri: image ? image : "https://picsum.photos/700" }}
-      />
-
-      <Card.Actions>
+      {/* <Card.Actions>
         <Button
          onPress={()=>
           props.navigation.navigate("Product Detail", {item:props})}>
-           ראה עוד</Button>
-        <Button onPress={() => {
+           לרכישה</Button> 
+         <Button onPress={() => {
           props.addItemToCart(props)
         }}>הוסף לעגלה</Button>
-      </Card.Actions>
+      </Card.Actions>  */}
+     
     </Card>
+    // <TouchableOpacity style={{marginBottom:10}}>
+    //   <View style={{
+    //     marginBottom:15
+    //   }}>
+    //   <Card.Cover style={{width:300, height: 200, borderRadius:'25px'}}
+    //     source={{ uri: image ? image : "https://picsum.photos/700" }}
+    //   />
+    //     <View style={{
+    //       position:'absolute',
+    //       bottom:0,
+    //       height:50,
+    //       width:100,
+    //       backgroundColor:'white',
+    //       borderTopLeftRadius:25,
+    //       borderBottomRightRadius:10,
+    //       alignItems:'center',
+    //       justifyContent:'center',
+    //       marginLeft:200
+    //     }}>
+         
+    //          <Text style={{fontSize:20}}>{price}₪</Text>
+    //          <Text style={{textDecorationLine:'line-through',}}>{originalprice}₪</Text> 
+           
+    //     </View>
+    //     {/* <View style={{
+    //       position:'absolute',
+    //       bottom:140,
+    //       height:50,
+    //       width:50,
+    //       backgroundColor:'white',
+    //       borderRadius:100,
+    //       alignItems:'center',
+    //       justifyContent:'center',
+    //       marginLeft:10
+    //     }}>
+         
+    //      <Card.Cover style={{ height:50,
+    //       width:50,borderRadius:100}}
+    //       source={require("../../assets/logos/logo4.jpg")}
+    //   />
+           
+    //     </View> */}
+        
+    //   </View>
+    //   {/* info */}
+     
+    //   <Text style={{fontSize:20}}>{name}</Text>
+    
+      
+        
+    
+    // </TouchableOpacity>
   );
 };
 

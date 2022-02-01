@@ -18,12 +18,12 @@ function MyTabs() {
       <Stack.Screen
         name="BusinessProducts"
         component={BusinessProducts}
-        options={{ headerShown: true, title: "תשלום" }}
+        options={{ headerShown: true, title: "דף ניהול" }}
       />
         <Stack.Screen
         name="BusinessOrders"
         component={BusinessOrders}
-        options={{ headerShown: true, title: "תשלום" }}
+        options={{ headerShown: true, title: "הזמנות שבוצעו" }}
     
       />
     </Stack.Navigator>

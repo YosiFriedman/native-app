@@ -7,6 +7,9 @@ const businessSchema = new mongoose.Schema(
         type:String,
         required:"נדרש שם",
     },
+    address:{
+        type:String,
+    }
 },
 {timestamps: true}
 );

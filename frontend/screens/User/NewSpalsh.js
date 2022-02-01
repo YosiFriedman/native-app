@@ -5,6 +5,7 @@ import {
     TouchableOpacity, 
     Dimensions,
     StyleSheet,
+    ImageBackground,
     StatusBar,
     Image
 } from 'react-native';
@@ -15,44 +16,20 @@ import { useTheme } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 
 const SplashScreen = ({navigation}) => {
-   
     const { colors } = useTheme();
+{/* <ImageBackground
+source={require('../../assets/mainfood.jpg')}
+style={{flex:1,justifyContent:'flex-end'}}
+resizeMode='cover'>
 
+</ImageBackground> */}
     return (
-      <View style={styles.container}>
-          <StatusBar backgroundColor='#FF6347' barStyle="light-content"/>
-        <View style={styles.header}>
-            <Animatable.Image 
-                animation="bounceIn"
-                duraton="1500"
-            source={require('../../assets/logo.png')}
-            style={styles.logo}
-            resizeMode="stretch"
-            />
-        </View>
-        <Animatable.View 
-            style={[styles.footer, {
-                backgroundColor: colors.background
-            }]}
-            animation="fadeInUpBig"
-        >
-            <Text style={[styles.title, {
-                color: colors.text
-            }]}>קבלו גישה להטבות הכי שוות</Text>
-            <Text style={styles.text}>התחברו עם המשתמש שלכם</Text>
-            <View style={styles.button}>
-            <Button onPress={()=>navigation.navigate('Signin')}>
-                התחברו
-            </Button>
-            <Button onPress={()=>navigation.navigate('Signup')}>
-                הרשמו
-            </Button>
-            <Button onPress={()=>navigation.navigate('Home')}>
-                הציצו פנימה
-            </Button>
-            </View>
-        </Animatable.View>
-      </View>
+     <View style={{
+        flex:2,
+         backgroundColor:'black'
+     }}>
+
+     </View>
     );
 };
 

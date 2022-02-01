@@ -39,14 +39,14 @@ const [token, setToken] = useState()
     { name: "ויזה", value: "2" },
     { name: "מאסטרקארד", value: "3" },
   ];
-  useFocusEffect(
-    React.useCallback(() => {
+  // useFocusEffect(
+  //   React.useCallback(() => {
       
-      return () => {
-        props.clearCart();
-      };
-    }, [])
-  );
+  //     return () => {
+  //       props.clearCart();
+  //     };
+  //   }, [])
+  // );
   useEffect(() => {
     
     setOrderItems(props.cartItems)
@@ -62,13 +62,14 @@ const [token, setToken] = useState()
     }
 
 }, [orderItems])
-console.log('orderitems state',props.cartItems)
+console.log('orderitems state')
 
 const finalorder = props.cartItems;
 console.log(props.route.params)
 const confirm = () => {
   const order = {
     orderItems:finalorder,
+    business:props.cartItems[0].business._id,
     user:user
   }
 
@@ -123,19 +124,29 @@ useEffect(() => {
 {/* <Text>מוצרים:</Text> */}
 {props.cartItems.map((x) =>{
     return(
-<ListItem key={x.product._id}
+<ListItem key={x.product._id} 
 avatar>
     <Left>
-        <Thumbnail source={{uri:x.product.image}}/>
+        <Thumbnail source={{uri:x.product.image}} style={{width:200,height:200}}/>
     </Left>
     <Body>
         <Left>
-            <Text>{x.product.name}</Text>
+            <Text style={{fontSize:'18px', fontWeight:'bold'}}>{x.product.name}</Text>
         </Left>
         <Right>
-            <Text>{x.product.price}</Text>
+          
+          <View style={{alignItems:'center',
+          justifyContent:'center'}}>
+
+<Text style={{fontWeight:'bold'}}>מחיר</Text>
+        <Text style={{fontSize:20,fontWeight:'bold',color:'#FF6347'}}>{x.product.price * x.quantity}₪</Text>
+        <Text style={{textDecorationLine:'line-through', }}>{x.product.originalprice * x.quantity}₪</Text> 
+      
+        <Text style={{fontWeight:'bold'}}>כמות</Text>
             <Text>{x.quantity}</Text>
+            </View>
         </Right>
+       
     </Body>
 
 </ListItem>
@@ -143,11 +154,9 @@ avatar>
 })}
 
       </Content>
-      <Header>
-        <Body>
+     
           <Title>בחר את שיטת התשלום</Title>
-        </Body>
-      </Header>
+       
       <Content>
         {methods.map((item, index) => {
           return (
@@ -177,7 +186,7 @@ avatar>
           </Picker>
         ) : null}
         <View style={{marginTop: 60, alignSelf:'center'}}>
-            <Button title={'אשר'}
+            <Button title={'שלם'}
             onPress={() => confirm()}>
 
             </Button>

@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
        
     },
+    birthday:{
+        type:Date
+       
+        
+    },
     passwordHash: {
         type: String,
         trim: true,

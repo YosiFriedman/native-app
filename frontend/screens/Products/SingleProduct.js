@@ -21,26 +21,34 @@ import AuthGlobal from '../../Context/store/AuthGlobal';
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
 const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 55;
-const MAX_HEIGHT = 350;
+const MAX_HEIGHT = 285;
 
 const SingleProduct = ( props ) => {
   const [item, setItem] = useState(props.route.params.item);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
  
   const [availability, setAvailability] = useState('');
   const navTitleView = useRef(null);
   const context = useContext(AuthGlobal)
+  // const displayPrice = () => {
+  //   if(item.quantity === NaN){
+  //     item.quantity = 0
+  //   }else {
+  //     item.price * item.quantity
+  //   }
+    
+  // }
   const reduceQuantity = () => {
     
     if(quantity< 1){
-      setQuantity(1)
+      setQuantity(0)
     } else {
       setQuantity(quantity - 1)
     }
     
     
     
-    Object.assign(item, {quantity: quantity});
+ 
     // setItem({ ...item, quantity: quantity });
   }
   const addQuantity = () => {
@@ -54,10 +62,14 @@ const SingleProduct = ( props ) => {
       return;
     }
     setQuantity(quantity + 1)
+    
+  }
+  const setnewQuantity = () => {
     Object.assign(item, {quantity: quantity});
+    props.navigation.navigate("Checkout")
   }
   useEffect(() => {
-    Object.assign(item, {quantity: quantity});
+    Object.assign(item, {quantity: 1});
     console.log('newitem',item)
   }, [])
 console.log('SingleProduct',props.route.params.item)
@@ -86,7 +98,7 @@ console.log('updateitem',item)
           </Animatable.View>
         )}
       >
-        <TriggeringView
+        {/* <TriggeringView
           style={styles.section}
           onHide={() => navTitleView.current.fadeInUp(200)}
           onDisplay={() => navTitleView.current.fadeOut(100)}
@@ -101,24 +113,37 @@ console.log('updateitem',item)
               <Text>reviews</Text>
             </View>
           </View>
-        </TriggeringView>
+        </TriggeringView> */}
         <View style={[styles.section, styles.sectionLarge]}>
+        <Text style={styles.sectionTitle}>מה ההטבה כוללת: </Text>
           <Text style={styles.sectionContent}>{item.description}</Text>
+          <View style={{paddingTop:70}}>
+        <Text style={styles.sectionTitleSmall}>הערות נוספות: </Text>
+          <Text style={styles.sectionContentSmall}>{item.additionalcomments}</Text>
+          <Text style={styles.sectionTitleSmall}>אופן מימוש: </Text>
+          <Text style={styles.sectionContentSmall}>{item.howtouse}</Text>
           
+          <Text style={styles.sectionContentSmall}>תקף עד: 2.11.2022 </Text>
+         <Text style={{fontSize:12,fontWeight:'bold',color:'#FF6347',textAlign:'right',marginTop:3}}>כתובת עסק: {item.business.name} {item.business.address}</Text>
+        </View>
         </View>
        
+        
         <View style={{ marginHorizontal: 30 }}>
+          
           <TouchableOpacity activeOpacity={0.8}>
             <View style={styles.lastCall}>
-              <Text style={{ color: "black" }}>מלאי מוגבל</Text>
+              {/* <Text style={{ color: "black" }}>מלאי מוגבל</Text> */}
+              <Text style={styles.sectionContentSmall}>עד גמר המלאי 
+בכפוף לתקנון ההטבה</Text>
               <Row>
-          <View style={styles.actionBtn}>
-            <Icon name="remove" size={25} style={{ color: "white" }} onPress={() => reduceQuantity()} />
-          </View>
-          <Text style={{ fontWeight: "bold", fontSize: 18, margin: 2 }}>{item.quantity}</Text>
-          <View style={styles.actionBtn}>
-            <Icon name="add" size={25} style={{ color: "white" }} onPress={() => addQuantity()}/>
-          </View>
+          <Button style={styles.actionBtn} onPress={() => reduceQuantity()}>
+            <Icon name="remove" size={25} style={{ color: "white" }}  />
+          </Button>
+          <Text style={{ fontWeight: "bold", fontSize: 18, margin: 2 }}>{quantity}</Text>
+          <Button style={styles.actionBtn}  onPress={() => addQuantity()}>
+            <Icon name="add" size={25} style={{ color: "white" }}/>
+          </Button>
         </Row>
             </View>
           </TouchableOpacity>
@@ -129,9 +154,9 @@ console.log('updateitem',item)
          
              <View style={styles.btnContainer}>
              <Button style={styles.btnContainer} onPress={() => {
-           props.addItemToCart(item); props.navigation.navigate("Checkout");
+           setnewQuantity(); props.addItemToCart(item); 
          }}>
-            <Text style={{paddingLeft:55}}>הזמינו עכשיו</Text>
+            <Text style={{paddingLeft:35}}> <Text style={{margin:10}}>הזמינו עכשיו</Text> <Text style={{marginRight:10}}>{ item.price * quantity}₪</Text></Text>
          </Button>
          {console.log('props',props)}
              </View>
@@ -170,6 +195,7 @@ export default connect(null, mapDispatchToProps)(SingleProduct);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:'row'
   },
   image: {
     height: MAX_HEIGHT,
@@ -188,16 +214,32 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
     backgroundColor: "white",
-    direction: "rtl",
+    flex:1,
+    textAlign: "right",
+    
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
+    textAlign:'right',
+   
+  },
+  sectionTitleSmall: {
+    fontSize: 14,
+   color:'grey',
+    textAlign:'right',
+    paddingTop:10
   },
   sectionContent: {
     fontSize: 16,
-    textAlign: "justify",
+    textAlign:'right'
   },
+  sectionContentSmall: {
+    fontSize: 12,
+    textAlign:'right',
+    color:'grey'
+  },
+
   categories: {
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -244,9 +286,9 @@ const styles = StyleSheet.create({
     minHeight: 250,
   },
   btnContainer: {
-    backgroundColor: "#de4f35",
-    height: 60,
-    borderRadius: 30,
+    backgroundColor: "#FF6347",
+    height: 50,
+    borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
   },

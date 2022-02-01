@@ -8,7 +8,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import HomeNavigator from "./HomeNavigator";
 import CartNavigator from "./CartNavigator";
-import ProfileNavigator from "./ProfileNavigator";
+import MyOrdersNavigator from "./MyOrdersNavigator";
 import UserNavigator from "./UserNavigator";
 import CartIcon from '../components/CartIcon';
 import AdminNavigator from "./AdminNavigator";
@@ -43,7 +43,7 @@ const Main = () => {
     initialRouteName="Feed"
       activeColor="#FF6347"
       barStyle={{ backgroundColor: 'white' }}
-     
+    
       
   >
     <Tab.Screen
@@ -55,6 +55,22 @@ const Main = () => {
         tabBarIcon: ({ color }) => (
           <Icon
             name="home"
+            style={{ position: "relative" }}
+            color={color}
+            size={25}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="MyOrders"
+      component={MyOrdersNavigator}
+      options={{
+        tabBarLabel:false,
+        tabBarColor: 'red',
+        tabBarIcon: ({ color }) => (
+          <Icon
+            name="reorder"
             style={{ position: "relative" }}
             color={color}
             size={25}
@@ -108,10 +124,12 @@ const Main = () => {
       component={UserNavigator}
      
       options={{
+      
         tabBarLabel:false,
         tabBarIcon: ({ color }) => (
           <Icon name="user" color={color} size={30} />
         ),
+       
        
       }}
     />
